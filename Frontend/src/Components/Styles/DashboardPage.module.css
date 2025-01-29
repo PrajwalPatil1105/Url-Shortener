@@ -1,0 +1,163 @@
+.mainContent {
+  padding: 1.5em;
+  margin-top: 6em;
+  height: 75%;
+  background-color: #fff;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 3em;
+}
+
+.header h2 {
+  font-size: 1.2em;
+  font-weight: 600;
+  font-family: Manrope;
+}
+
+.header h3 {
+  margin-left: 2em;
+  font-size: 1.2em;
+  font-weight: 600;
+  font-family: Manrope;
+  color: #1b48da;
+}
+
+.listItem {
+  display: flex;
+  flex-direction: row;
+  gap: 2%;
+}
+
+.devicename {
+  width: 4em;
+  margin-bottom: 0.9em;
+}
+
+.dates {
+  margin-bottom: 0.9em;
+}
+
+.listItemHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.progressBar {
+  width: 80%;
+  background-color: #fbf9f9;
+  height: 16px;
+  margin-top: 2px;
+  overflow: hidden;
+  border-radius: 3px;
+}
+
+.filled {
+  height: 100%;
+  background-color: #1b48da;
+  transition: width 1s ease-out;
+}
+
+.loadingContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 16rem;
+}
+
+.loadingText {
+  font-size: 1.1rem;
+  color: #5f7ee2;
+  font-family: Manrope;
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+}
+
+.card {
+  background-color: #fff;
+  min-height: 24em;
+  max-height: 35%;
+  border-radius: 8px;
+  border: 2px solid #ececf2;
+  padding: 2em;
+  overflow: scroll;
+}
+
+.card h4 {
+  font-size: 1em;
+  font-weight: 400;
+  color: #1b48da;
+  z-index: 1000;
+  margin-bottom: 2em;
+}
+
+.card ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.card li {
+  font-size: 0.9em;
+  margin-bottom: 0.3em;
+  font-family: Manrope;
+}
+
+@media (max-width: 768px) {
+  .mainContent {
+    position: absolute;
+    width: 91%;
+    padding: 1em;
+    margin-top: 8em;
+    height: auto;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .loadingText {
+    font-size: 1rem;
+    color: #5f7ee2;
+    font-family: Manrope;
+  }
+
+  .header {
+    flex-direction: row;
+    align-items: flex-start;
+    margin-bottom: 0.5em;
+  }
+
+  .header h2 {
+    font-size: 1.1em;
+  }
+
+  .header h3 {
+    font-size: 1.2em;
+    margin-bottom: 1em;
+  }
+
+  .contentGrid {
+    grid-template-columns: 1fr;
+    gap: 1em;
+  }
+
+  .card {
+    padding: 0.8em;
+    min-height: 13em;
+    max-height: 13em;
+  }
+
+  .card h4 {
+    font-size: 0.95em;
+  }
+
+  .card li {
+    font-size: 0.85em;
+  }
+}

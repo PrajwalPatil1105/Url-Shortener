@@ -1,0 +1,83 @@
+.home {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal {
+  background-color: #ffffff;
+  padding: 0rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  max-width: 450px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 30%;
+}
+
+.close {
+  margin-left: 86%;
+  margin-top: 4%;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: rgb(138, 136, 136);
+}
+
+.modal p {
+  margin-top: 5%;
+  font-family: Manrope;
+  font-size: 1em;
+}
+
+.btns {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  margin-top: 8%;
+}
+
+.btn1,
+.btn2 {
+  padding: 0.5em 4.3em;
+  font-family: Manrope;
+  font-size: 1em;
+  font-weight: 600;
+  background-color: #ececee;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+}
+
+.btn2 {
+  background-color: #1b48da;
+  color: white;
+}
+
+.btn1:hover {
+  background-color: #c7c7c9;
+}
+
+.btn2:hover {
+  border: 2px solid #1b48da;
+  background-color: transparent;
+  color: #1b48da;
+  padding: 0.3em 4.2em;
+}
+
+@media (max-width: 768px) {
+  .modal {
+    height: 35%;
+    width: 98%;
+  }
+}

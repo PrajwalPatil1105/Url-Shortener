@@ -1,0 +1,404 @@
+.mainContainer {
+  display: grid;
+  grid-template-columns: 20% 80%;
+  height: 100vh;
+  overflow: hidden;
+  font-family: Manrope;
+  font-weight: 600;
+}
+
+.leftSection {
+  background-color: #ffffff;
+  padding: 2em 1em;
+  border-right: 1.6px solid #e6e6e6;
+}
+
+.logo {
+  padding-left: 2em;
+  margin-bottom: 2em;
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+  margin-top: 2.5em;
+}
+
+.menu li {
+  margin: 0.6em 0;
+  cursor: pointer;
+  padding: 0.7em 2em;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+.menu li:hover {
+  background-color: #7691ed;
+  color: white;
+}
+
+.settingItem {
+  width: 100%;
+  padding: 10px 0px;
+  margin-top: 2em;
+  border-bottom: 1px solid #e6e6e6;
+  border-top: 1px solid #e6e6e6;
+}
+
+.settingItem span {
+  padding-right: 10px;
+}
+
+.activeMenuItem {
+  background-color: #eff6ff;
+  color: #1b48da;
+}
+
+.rightSection {
+  background-color: white;
+}
+
+.navbar {
+  position: fixed;
+  z-index: 1000;
+  font-size: 1em;
+  width: 100%;
+  display: flex;
+  font-weight: bold;
+  color: #333;
+  background-color: #fff;
+  padding: 1.1em 2em;
+  border-bottom: 1.6px solid #e6e6e6;
+}
+
+.greeting {
+  max-width: 30%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.name {
+  display: flex;
+  max-width: 100%;
+  flex-direction: row;
+  overflow-x: hidden;
+  flex-wrap: nowrap;
+  font-size: 0.99em;
+  gap: 7px;
+  padding: 0%;
+  align-items: center;
+}
+
+.date {
+  font-size: 0.8em;
+  color: #878ba9;
+  font-weight: 500;
+  padding-left: 32px;
+}
+
+.navRight {
+  display: flex;
+  margin-left: 35%;
+  gap: 15px;
+}
+
+.create {
+  padding: 0em 1em;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: Manrope;
+  font-weight: 600;
+  border: none;
+  color: white;
+  background-color: #1b48da;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.create:hover {
+  background-color: transparent;
+  padding: 0em 0.94em;
+  color: #1b48da;
+  border: 1.5px solid #1b48da;
+}
+
+.search {
+  width: 12em;
+  padding: 0px 10px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: #b1b3c8;
+  border-radius: 5px;
+  box-shadow: 0px 0px 2px #b1b3c8;
+}
+
+.inputfiled {
+  width: 10em;
+  border: none;
+  color: #878ba9;
+  font-weight: 500;
+  padding: 3px 0px;
+  font-family: Manrope;
+  font-size: 0.94em;
+  outline: none;
+}
+
+.user {
+  padding: 12px;
+  border-radius: 35px;
+  font-family: Manrope;
+  font-weight: 600;
+  border: none;
+  font-size: 0.91em;
+  background-color: #fde48a;
+  cursor: pointer;
+}
+
+.logout {
+  position: fixed;
+  left: 91%;
+  top: 10.1%;
+  cursor: pointer;
+  font-family: Manrope;
+  font-weight: 600;
+  color: #878ba9;
+  padding: 0.34em 2em;
+  border: 1.6px solid #e6e6e6;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.logout:hover {
+  background-color: rgb(201, 199, 199);
+  color: white;
+}
+
+.mainContent {
+  padding: 1em;
+  margin-top: 8em;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+  margin-top: 1em;
+}
+
+@media (max-width: 1281px) {
+  .navRight {
+    margin-left: 25%;
+  }
+  .logout {
+    left: 86.5%;
+    top: 9.5%;
+  }
+}
+
+@media (max-width: 429px) {
+  .hamburgerMenu {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 10001;
+    cursor: pointer;
+    width: 30px;
+    height: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .leftSection {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    background-color: #fff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 10000;
+    padding-top: 60px;
+  }
+
+  .menuOpen {
+    transform: translateX(0);
+  }
+
+  .menuClosed {
+    transform: translateX(-100%);
+  }
+
+  .rightSection {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .greeting {
+    min-width: 30%;
+    margin-left: 5%;
+    font-size: 0.95em;
+    padding-right: 40px;
+  }
+
+  .navRight {
+    flex-direction: row;
+    margin-left: 0px;
+    gap: 10px;
+    flex-wrap: wrap;
+    width: 40%;
+  }
+
+  .create {
+    width: 8.5em;
+    justify-content: center;
+    padding: 0.3em 0em;
+    font-size: 0.9em;
+  }
+
+  .create:hover {
+    padding: 0.25em 0em;
+  }
+
+  .search {
+    width: 9em;
+    gap: 3px;
+    font-size: small;
+    padding: 0 2px;
+  }
+
+  .inputfiled {
+    width: 100%;
+    padding: 0%;
+    font-size: 0.7em;
+  }
+
+  .user {
+    position: absolute;
+    margin-left: 9em;
+    margin-top: 1em;
+    text-align: center;
+  }
+
+  .name {
+    font-size: 0.89em;
+    align-items: stretch;
+  }
+
+  .logout {
+    left: 72%;
+    top: 15%;
+  }
+
+  .date {
+    padding-left: 22px;
+    font-size: 0.8em;
+    padding-top: 10px;
+  }
+
+  .hamburgerIcon {
+    margin-top: 1em;
+  }
+}
+
+@media (max-width: 379px) {
+  .greeting {
+    max-width: 38%;
+    padding-right: 0px;
+  }
+
+  .create {
+    width: 8.8em;
+    justify-content: center;
+    padding: 0.3em 0em;
+    font-size: 0.7em;
+  }
+
+  .search {
+    width: 7.2em;
+    gap: 3px;
+    font-size: small;
+    padding: 0 2px;
+  }
+
+  .user {
+    position: absolute;
+    margin-left: 7em;
+    margin-top: 1em;
+    text-align: center;
+  }
+}
+
+@media (min-width: 430px) and (max-width: 884px) {
+  .logo {
+    padding-left: 0%;
+    margin-bottom: 2em;
+  }
+
+  .navRight {
+    margin-left: 1em;
+  }
+
+  .menu li {
+    padding: 0.7em 1em;
+    border-radius: 5px;
+  }
+
+  .hamburgerMenu {
+    display: none;
+  }
+
+  .logout {
+    left: 70%;
+    top: 10.1%;
+  }
+  .leftSection {
+    transform: translateX(0);
+    position: relative;
+  }
+
+  .rightSection {
+    margin-left: 0;
+  }
+
+  .create {
+    width: 8em;
+    justify-content: center;
+    padding: 0.3em 0em;
+    font-size: 0.9em;
+  }
+
+  .create:hover {
+    padding: 0.25em 0em;
+  }
+
+  .search {
+    width: 9em;
+    gap: 3px;
+    font-size: small;
+    padding: 0 2px;
+  }
+
+  .inputfiled {
+    width: 100%;
+    padding: 0%;
+    font-size: 0.7em;
+  }
+
+  .user {
+    position: absolute;
+    margin-left: 19em;
+    margin-top: 0em;
+    text-align: center;
+  }
+}

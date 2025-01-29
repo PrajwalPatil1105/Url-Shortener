@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link Not Found</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family:Segoe UI;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background:#e4e8eb;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 1.8rem 0.7em 0.9em 0.7em;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 90%;
+            width: 550px;
+        }
+
+        .icon-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .icon-circle {
+            background: #fee2e2;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+        }
+
+        .icon-circle i {
+            font-size: 25px;
+            color: #dc2626;
+        }
+
+        .message {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .info {
+            font-size: 1.1rem;
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.9rem;
+            }
+
+            .message {
+                font-size: 1.3rem;
+            }
+
+            .info {
+                font-size: 0.8rem;
+            }
+
+            .icon-circle {
+                width: 60px;
+                height: 60px;
+            }
+
+            .icon-circle i {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon-container">
+            <div class="icon-circle">
+                <i class="fas fa-link-slash"></i>
+            </div>
+        </div>
+        <div class="message">Link Not Found !!</div>
+        <div class="info">
+            The link you are trying to access was not found.<br>
+            Please contact the link owner for further assistance.
+        </div>
+    </div>
+</body>
+</html>
