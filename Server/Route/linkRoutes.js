@@ -82,9 +82,7 @@ router.post("/create", auth(), async (req, res) => {
       }
     }
 
-    const shortUrl = `${
-      process.env.BASE_URL || "http://localhost:4000"
-    }/url/redirect/${hashedLink}`;
+    const shortUrl = `https://url-shortener-92ga.onrender.com/url/redirect/${hashedLink}`;
 
     const newLink = new Link({
       user: req.User.id,
