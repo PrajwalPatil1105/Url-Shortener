@@ -21,10 +21,11 @@ function DeleteAcc({ setDelaccpopup }) {
         const data = await response.json();
         toast.success(data?.message);
         setTimeout(() => {
+          localStorage.clear();
           navigate("/login");
         }, 1000);
       } else {
-        toast.error("Link not deleted");
+        toast.error("User not deleted");
       }
     } catch (error) {
       console.error("Error deleting the link:", error);
