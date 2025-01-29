@@ -115,8 +115,6 @@ router.post("/create", auth(), async (req, res) => {
   }
 });
 
-const UAParser = require("ua-parser-js"); // Ensure this is imported
-
 router.get("/redirect/:hashedLink", async (req, res) => {
   try {
     const { hashedLink } = req.params;
