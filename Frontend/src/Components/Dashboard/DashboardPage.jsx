@@ -99,12 +99,12 @@ const DashboardPage = () => {
     );
   }
 
-  if (!linkdata || linkdata.length === 0) {
+  if (!linkdata || linkdata.length === 0 || aggregatedStats.totalClicks === 0) {
     return (
       <div className={styles.mainContent}>
         <div className={styles.loadingContainer}>
           <p className={styles.loadingText}>
-            No links found. Add your first link ! &nbsp; &nbsp;
+            No link's click data found... ! &nbsp; &nbsp;
             <FontAwesomeIcon icon={faLink} />
           </p>
         </div>
