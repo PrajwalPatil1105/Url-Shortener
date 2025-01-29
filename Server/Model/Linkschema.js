@@ -42,6 +42,7 @@ const LinkSchema = new mongoose.Schema({
   },
   clickDetails: [
     {
+      requestId: { type: String },
       ipAddress: {
         type: String,
       },

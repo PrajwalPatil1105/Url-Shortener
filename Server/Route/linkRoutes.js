@@ -117,13 +117,29 @@ router.post("/create", auth(), async (req, res) => {
 
 router.get("/redirect/:hashedLink", async (req, res) => {
   try {
-    if (req.headers["sec-fetch-mode"] === "navigate") {
-      const { hashedLink } = req.params;
-      const fullHashedLink = `https://url-shortener-92ga.onrender.com/url/redirect/${hashedLink}`;
-      const link = await Link.findOne({ hashedLink: fullHashedLink });
-      if (!link) {
-        return res.status(410).render("linknotfound");
-      }
+    const { hashedLink } = req.params;
+    const fullHashedLink = `https://url-shortener-92ga.onrender.com/url/redirect/${hashedLink}`;
+    const isPrefetch =
+      req.headers["purpose"] === "prefetch" ||
+      req.headers["x-moz"] === "prefetch" ||
+      req.headers["x-purpose"] === "preview" ||
+      req.headers["sec-purpose"] === "prefetch";
+    const link = await Link.findOne({ hashedLink: fullHashedLink });
+    if (!link) {
+      return res.status(410).render("linknotfound");
+    }
+    if (isPrefetch) {
+      return res.redirect(link.originalLink);
+    }
+    const requestId = `${hashedLink}-${req.ip}-${Date.now()}`;
+    const recentClick = await Link.findOne({
+      "clickDetails.requestId": requestId,
+      "clickDetails.clickedAt": {
+        $gte: new Date(Date.now() - 5000),
+      },
+    });
+
+    if (!recentClick) {
       const parser = new UAParser(req.headers["user-agent"]);
       const result = parser.getResult();
       let deviceType = "Desktop";
@@ -138,6 +154,7 @@ router.get("/redirect/:hashedLink", async (req, res) => {
         req.ip;
 
       const clickDetail = {
+        requestId,
         ipAddress: ipAddress,
         browser: result.browser.name,
         os: result.os.name,
@@ -147,7 +164,6 @@ router.get("/redirect/:hashedLink", async (req, res) => {
         $inc: { totalClicks: 1 },
         $push: { clickDetails: clickDetail },
       };
-
       if (deviceType === "Mobile") {
         updateFields.$inc.mobileClicks = 1;
       } else if (deviceType === "Desktop") {
@@ -156,11 +172,11 @@ router.get("/redirect/:hashedLink", async (req, res) => {
         updateFields.$inc.tabletClicks = 1;
       }
       await Link.findByIdAndUpdate(link._id, updateFields);
-      return res.redirect(link.originalLink);
-    } else {
-      const link = await Link.findOne({ hashedLink: fullHashedLink });
-      return res.redirect(link.originalLink);
     }
+    res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    res.setHeader("Pragma", "no-cache");
+    res.setHeader("Expires", "0");
+    return res.redirect(link.originalLink);
   } catch (error) {
     console.error("Error redirecting:", error);
     return res.status(500).json({
