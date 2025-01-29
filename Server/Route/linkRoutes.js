@@ -117,56 +117,50 @@ router.post("/create", auth(), async (req, res) => {
 
 router.get("/redirect/:hashedLink", async (req, res) => {
   try {
-    const { hashedLink } = req.params;
-    const fullHashedLink = `https://url-shortener-92ga.onrender.com/url/redirect/${hashedLink}`;
+    if (req.headers["sec-fetch-mode"] === "navigate") {
+      const { hashedLink } = req.params;
+      const fullHashedLink = `https://url-shortener-92ga.onrender.com/url/redirect/${hashedLink}`;
+      const link = await Link.findOne({ hashedLink: fullHashedLink });
+      if (!link) {
+        return res.status(410).render("linknotfound");
+      }
+      const parser = new UAParser(req.headers["user-agent"]);
+      const result = parser.getResult();
+      let deviceType = "Desktop";
+      if (result.device.type === "mobile") deviceType = "Mobile";
+      if (result.device.type === "tablet") deviceType = "Tablet";
 
-    if (
-      req.headers["sec-fetch-mode"] &&
-      req.headers["sec-fetch-mode"] !== "navigate"
-    ) {
-      return res.status(204).end();
+      const ipAddress =
+        req.headers["x-forwarded-for"]?.split(",")[0] ||
+        req.headers["x-real-ip"] ||
+        req.connection.remoteAddress ||
+        req.socket.remoteAddress ||
+        req.ip;
+
+      const clickDetail = {
+        ipAddress: ipAddress,
+        browser: result.browser.name,
+        os: result.os.name,
+        clickedAt: Date.now(),
+      };
+      const updateFields = {
+        $inc: { totalClicks: 1 },
+        $push: { clickDetails: clickDetail },
+      };
+
+      if (deviceType === "Mobile") {
+        updateFields.$inc.mobileClicks = 1;
+      } else if (deviceType === "Desktop") {
+        updateFields.$inc.desktopClicks = 1;
+      } else if (deviceType === "Tablet") {
+        updateFields.$inc.tabletClicks = 1;
+      }
+      await Link.findByIdAndUpdate(link._id, updateFields);
+      return res.redirect(link.originalLink);
+    } else {
+      const link = await Link.findOne({ hashedLink: fullHashedLink });
+      return res.redirect(link.originalLink);
     }
-
-    const link = await Link.findOne({ hashedLink: fullHashedLink });
-    if (!link) {
-      return res.status(410).render("linknotfound");
-    }
-
-    const parser = new UAParser(req.headers["user-agent"]);
-    const result = parser.getResult();
-    let deviceType = "Desktop";
-    if (result.device.type === "mobile") deviceType = "Mobile";
-    if (result.device.type === "tablet") deviceType = "Tablet";
-
-    const ipAddress =
-      req.headers["x-forwarded-for"]?.split(",")[0] ||
-      req.headers["x-real-ip"] ||
-      req.connection.remoteAddress ||
-      req.socket.remoteAddress ||
-      req.ip;
-
-    const clickDetail = {
-      ipAddress: ipAddress,
-      browser: result.browser.name,
-      os: result.os.name,
-      clickedAt: Date.now(),
-    };
-
-    const updateFields = {
-      $inc: { totalClicks: 1 },
-      $push: { clickDetails: clickDetail },
-    };
-
-    if (deviceType === "Mobile") {
-      updateFields.$inc = { ...updateFields.$inc, mobileClicks: 1 };
-    } else if (deviceType === "Desktop") {
-      updateFields.$inc = { ...updateFields.$inc, desktopClicks: 1 };
-    } else if (deviceType === "Tablet") {
-      updateFields.$inc = { ...updateFields.$inc, tabletClicks: 1 };
-    }
-
-    await Link.findByIdAndUpdate(link._id, updateFields);
-    return res.redirect(link.originalLink);
   } catch (error) {
     console.error("Error redirecting:", error);
     return res.status(500).json({
