@@ -118,9 +118,7 @@ router.post("/create", auth(), async (req, res) => {
 router.get("/redirect/:hashedLink", async (req, res) => {
   try {
     const { hashedLink } = req.params;
-    const fullHashedLink = `${
-      process.env.BASE_URL || "http://localhost:4000"
-    }/url/redirect/${hashedLink}`;
+    const fullHashedLink = `https://url-shortener-92ga.onrender.com/url/redirect/${hashedLink}`;
 
     const link = await Link.findOne({ hashedLink: fullHashedLink });
     if (!link) {
