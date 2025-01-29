@@ -9,7 +9,7 @@ const authRoutes = require("./Route/authRoutes.js");
 
 dotenv.config();
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: "*" }));
 
 app.set("view engine", "ejs");
 app.set("views", "./views");
