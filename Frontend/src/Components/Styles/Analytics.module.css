@@ -170,6 +170,12 @@
     padding: 1.3em 0.3em;
     overflow-y: scroll;
   }
+  .loadingContainer {
+    display: flex;
+    align-items: center;
+    margin-left: 20%;
+    height: 6rem;
+  }
 
   .table {
     font-size: 0.7em;

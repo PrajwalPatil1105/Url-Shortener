@@ -250,14 +250,14 @@
 
   .greeting {
     min-width: 30%;
-    margin-left: 5%;
+    margin-left: 2%;
     font-size: 0.95em;
-    padding-right: 40px;
+    padding-right: 20px;
   }
 
   .navRight {
     flex-direction: row;
-    margin-left: 7%;
+    margin-left: 10%;
     gap: 10px;
     flex-wrap: wrap;
     width: 40%;
@@ -307,10 +307,10 @@
   }
 
   .date {
-    padding-left: 22px;
+    padding-left: 18px;
     font-size: 0.8em;
     margin-top: 12px;
-    margin-left: 6px;
+    margin-left: 10px;
   }
 
   .hamburgerIcon {
