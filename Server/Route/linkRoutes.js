@@ -129,8 +129,16 @@ router.get("/redirect/:hashedLink", async (req, res) => {
       let deviceType = "Desktop";
       if (result.device.type === "mobile") deviceType = "Mobile";
       if (result.device.type === "tablet") deviceType = "Tablet";
+
+      const ipAddress =
+        req.headers["x-forwarded-for"]?.split(",")[0] ||
+        req.headers["x-real-ip"] ||
+        req.connection.remoteAddress ||
+        req.socket.remoteAddress ||
+        req.ip;
+
       const clickDetail = {
-        ipAddress: req.ip,
+        ipAddress: ipAddress,
         browser: result.browser.name,
         os: result.os.name,
         clickedAt: Date.now(),

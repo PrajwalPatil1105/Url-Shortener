@@ -7,6 +7,9 @@ const dotenv = require("dotenv");
 const linkRouter = require("./Route/linkRoutes.js");
 const authRoutes = require("./Route/authRoutes.js");
 
+app.set("trust proxy", true);
+app.set("trust proxy", ["loopback", "linklocal", "uniquelocal"]);
+
 dotenv.config();
 app.use(express.json());
 app.use(cors({ origin: "*" }));
