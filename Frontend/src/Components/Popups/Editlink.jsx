@@ -69,9 +69,9 @@ function Editlink({ setEditlinkbtn, currLink, setrefresh }) {
         console.log(data);
         setlink(data?.originalLink);
         setremake(data?.remark);
-        const formattedDate = new Date(data.expiryDate)
-          .toISOString()
-          .split("T")[0];
+        const formattedDate = data.expiryDate
+          ? new Date(data.expiryDate).toISOString().split("T")[0]
+          : null;
         setExpDate(formattedDate);
       } else {
         toast.error("Failed to fetch link data");
