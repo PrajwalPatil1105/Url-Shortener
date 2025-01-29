@@ -117,46 +117,42 @@ router.post("/create", auth(), async (req, res) => {
 
 router.get("/redirect/:hashedLink", async (req, res) => {
   try {
-    const { hashedLink } = req.params;
-    const fullHashedLink = `https://url-shortener-92ga.onrender.com/url/redirect/${hashedLink}`;
+    if (req.headers["sec-fetch-mode"] === "navigate") {
+      const { hashedLink } = req.params;
+      const fullHashedLink = `https://url-shortener-92ga.onrender.com/url/redirect/${hashedLink}`;
+      const link = await Link.findOne({ hashedLink: fullHashedLink });
+      if (!link) {
+        return res.status(410).render("linknotfound");
+      }
+      const parser = new UAParser(req.headers["user-agent"]);
+      const result = parser.getResult();
+      let deviceType = "Desktop";
+      if (result.device.type === "mobile") deviceType = "Mobile";
+      if (result.device.type === "tablet") deviceType = "Tablet";
+      const clickDetail = {
+        ipAddress: req.ip,
+        browser: result.browser.name,
+        os: result.os.name,
+        clickedAt: Date.now(),
+      };
+      const updateFields = {
+        $inc: { totalClicks: 1 },
+        $push: { clickDetails: clickDetail },
+      };
 
-    const link = await Link.findOne({ hashedLink: fullHashedLink });
-    if (!link) {
-      return res.status(410).render("linknotfound");
+      if (deviceType === "Mobile") {
+        updateFields.$inc.mobileClicks = 1;
+      } else if (deviceType === "Desktop") {
+        updateFields.$inc.desktopClicks = 1;
+      } else if (deviceType === "Tablet") {
+        updateFields.$inc.tabletClicks = 1;
+      }
+      await Link.findByIdAndUpdate(link._id, updateFields);
+      return res.redirect(link.originalLink);
+    } else {
+      const link = await Link.findOne({ hashedLink: fullHashedLink });
+      return res.redirect(link.originalLink);
     }
-
-    if (link.expiryDate && new Date() > new Date(link.expiryDate).getTime()) {
-      return res.status(410).render("linkexpiree");
-    }
-
-    const parser = new UAParser(req.headers["user-agent"]);
-    const result = parser.getResult();
-    let deviceType = "Desktop";
-    if (result.device.type === "mobile") deviceType = "Mobile";
-    if (result.device.type === "tablet") deviceType = "Tablet";
-
-    const clickDetail = {
-      ipAddress: req.ip,
-      browser: result.browser.name,
-      os: result.os.name,
-      clickedAt: Date.now(),
-    };
-
-    const updateFields = {
-      $inc: { totalClicks: 1 },
-      $push: { clickDetails: clickDetail },
-    };
-
-    if (deviceType === "Mobile") {
-      updateFields.$inc.mobileClicks = 1;
-    } else if (deviceType === "Desktop") {
-      updateFields.$inc.desktopClicks = 1;
-    } else if (deviceType === "Tablet") {
-      updateFields.$inc.tabletClicks = 1;
-    }
-
-    await Link.findByIdAndUpdate(link._id, updateFields);
-    return res.redirect(link.originalLink);
   } catch (error) {
     console.error("Error redirecting:", error);
     return res.status(500).json({

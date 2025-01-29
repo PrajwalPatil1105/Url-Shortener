@@ -21,47 +21,55 @@ function Addlink({ setaddlinkbtn, setrefresh }) {
 
   async function onSubmit(e) {
     e.preventDefault();
-    link.length == "0" ? setlinkerr("* Please Enter Link") : setlinkerr("");
-    remark.length == "0"
-      ? setremarkerr("* Plese Enter Remark")
-      : setremarkerr("");
-
+    let isValid = true;
+    if (link.length === 0) {
+      setlinkerr("* Please Enter Link");
+      isValid = false;
+    } else {
+      setlinkerr("");
+    }
+    if (remark.length === 0) {
+      setremarkerr("* Please Enter Remark");
+      isValid = false;
+    } else {
+      setremarkerr("");
+    }
     if (Adddate && (!ExpDate || ExpDate.length === 0)) {
       setdataerr("* Please Enter Date");
-      return;
+      isValid = false;
     } else {
       setdataerr("");
     }
-
-    if (link.length !== "0" && remark.length !== "0") {
-      const token = localStorage.getItem("token");
-      try {
-        const response = await fetch(`${BASE_URL}url/create`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            originalLink: link,
-            remark: remark,
-            expiryDate: ExpDate,
-          }),
-        });
-        const data = await response.json();
-        if (data?.code === "1") {
-          toast.success(data?.message);
-          clear();
-          setrefresh((prev) => !prev);
-          setTimeout(() => {
-            setaddlinkbtn(false);
-          }, 1000);
-        } else {
-          toast.error(data?.message);
-        }
-      } catch (error) {
-        console.log(error);
+    if (!isValid) {
+      return;
+    }
+    const token = localStorage.getItem("token");
+    try {
+      const response = await fetch(`${BASE_URL}url/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          originalLink: link,
+          remark: remark,
+          expiryDate: ExpDate,
+        }),
+      });
+      const data = await response.json();
+      if (data?.code === "1") {
+        toast.success(data?.message);
+        clear();
+        setrefresh((prev) => !prev);
+        setTimeout(() => {
+          setaddlinkbtn(false);
+        }, 1000);
+      } else {
+        toast.error(data?.message);
       }
+    } catch (error) {
+      console.log(error);
     }
   }
 
