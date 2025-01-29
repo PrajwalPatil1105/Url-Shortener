@@ -124,6 +124,9 @@ router.get("/redirect/:hashedLink", async (req, res) => {
       if (!link) {
         return res.status(410).render("linknotfound");
       }
+      if (link.expiryDate && new Date() > new Date(link.expiryDate).getTime()) {
+        return res.status(410).render("linkexpiree");
+      }
       const parser = new UAParser(req.headers["user-agent"]);
       const result = parser.getResult();
       let deviceType = "Desktop";

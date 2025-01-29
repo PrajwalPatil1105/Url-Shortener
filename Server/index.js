@@ -12,7 +12,16 @@ app.set("trust proxy", ["loopback", "linklocal", "uniquelocal"]);
 
 dotenv.config();
 app.use(express.json());
-app.use(cors({ origin: "*" }));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://url-shortener-sigma-pied.vercel.app/",
+    ],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  })
+);
 
 app.set("view engine", "ejs");
 app.set("views", "./views");
